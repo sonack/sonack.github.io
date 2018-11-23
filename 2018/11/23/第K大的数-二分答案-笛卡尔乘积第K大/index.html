@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>第K大的数 (二分答案, 笛卡尔乘积第K大) | Sonack&#39;s Blog | Be Better</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="数组A和数组B，里面都有n个整数。数组C共有n^2个整数，分别是A[0]  B[0],A[0]  B[1] … A[1]  B[0], A[1]  B[1] … A[n - 1] * B[n - 1]（数组A同数组B的组合）。求数组C中第K大的数。例如：A：1 2 3，B：2 3 4。A与B组合成的C包括2 3 4 4 6 8 6 9 12共9个数。">
+<meta name="keywords" content="ComputerVision, Algorithms">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第K大的数 (二分答案, 笛卡尔乘积第K大)">
+<meta property="og:url" content="http://yoursite.com/2018/11/23/第K大的数-二分答案-笛卡尔乘积第K大/index.html">
+<meta property="og:site_name" content="Sonack&#39;s Blog">
+<meta property="og:description" content="数组A和数组B，里面都有n个整数。数组C共有n^2个整数，分别是A[0]  B[0],A[0]  B[1] … A[1]  B[0], A[1]  B[1] … A[n - 1] * B[n - 1]（数组A同数组B的组合）。求数组C中第K大的数。例如：A：1 2 3，B：2 3 4。A与B组合成的C包括2 3 4 4 6 8 6 9 12共9个数。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-23T11:54:05.669Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第K大的数 (二分答案, 笛卡尔乘积第K大)">
+<meta name="twitter:description" content="数组A和数组B，里面都有n个整数。数组C共有n^2个整数，分别是A[0]  B[0],A[0]  B[1] … A[1]  B[0], A[1]  B[1] … A[n - 1] * B[n - 1]（数组A同数组B的组合）。求数组C中第K大的数。例如：A：1 2 3，B：2 3 4。A与B组合成的C包括2 3 4 4 6 8 6 9 12共9个数。">
+    
+        <link rel="alternate" type="application/atom+xml" title="Sonack&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">sonack</h5>
+          <a href="mailto:1243535683@qq.com" title="1243535683@qq.com" class="mail">1243535683@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/sonack" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/5676849934" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                微博
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">第K大的数 (二分答案, 笛卡尔乘积第K大)</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">第K大的数 (二分答案, 笛卡尔乘积第K大)</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-11-23T11:22:53.000Z" itemprop="datePublished" class="page-time">
+  2018-11-23
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-第K大的数-二分答案-笛卡尔乘积第K大"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">第K大的数 (二分答案, 笛卡尔乘积第K大)</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-11-23 19:22:53" datetime="2018-11-23T11:22:53.000Z"  itemprop="datePublished">2018-11-23</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>数组A和数组B，里面都有n个整数。数组C共有n^2个整数，分别是A[0] <em> B[0],A[0] </em> B[1] … A[1] <em> B[0], A[1] </em> B[1] … A[n - 1] * B[n - 1]（数组A同数组B的组合）。求数组C中第K大的数。例如：A：1 2 3，B：2 3 4。A与B组合成的C包括2 3 4 4 6 8 6 9 12共9个数。</p>
+<a id="more"></a>
+<hr>
+<p>对A和B排序，再二分答案，利用单调性，可以在O(n)内求出有多少个数比当前答案大。</p>
+<p>第K大的数，即有K-1个数比它大，定义函数judge(x)判断有多少个数比x大，第一个不满足judge(x)&gt;=K的x，即是第K大的数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">5e4</span>;</span><br><span class="line"><span class="keyword">int</span> n, K;</span><br><span class="line">LL a[maxn+<span class="number">10</span>], b[maxn+<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">judge</span><span class="params">(LL x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = n - <span class="number">1</span>; i &lt; n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (; j &gt;= <span class="number">0</span> &amp;&amp; a[i] * b[j] &gt; x; j--);</span><br><span class="line">        cnt += n - <span class="number">1</span> - j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// freopen("input.txt", "r", stdin);</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;K);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%lld%lld"</span>, &amp;a[i], &amp;b[i]);</span><br><span class="line">    sort(a, a+n);</span><br><span class="line">    sort(b, b+n);</span><br><span class="line">    LL l = <span class="number">0</span>, r = <span class="number">1e18</span>;</span><br><span class="line">    <span class="keyword">while</span> (l &lt; r)</span><br><span class="line">    &#123;</span><br><span class="line">        LL m = l + (r - l) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (judge(m) &gt;= K)</span><br><span class="line">            l = m + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            r = m;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%lld"</span>, l);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>submit: [<a href="https://www.51nod.com/Challenge/Problem.html#!#problemId=1105]" target="_blank" rel="noopener">https://www.51nod.com/Challenge/Problem.html#!#problemId=1105]</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-11-23T11:54:05.669Z" itemprop="dateUpdated">2018-11-23 19:54:05</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="sonack">
+            sonack
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/11/23/第K大的数-二分答案-笛卡尔乘积第K大/&title=《第K大的数 (二分答案, 笛卡尔乘积第K大)》 — Sonack's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/11/23/第K大的数-二分答案-笛卡尔乘积第K大/&title=《第K大的数 (二分答案, 笛卡尔乘积第K大)》 — Sonack's Blog&source=数组A和数组B，里面都有n个整数。数组C共有n^2个整数，分别是A[0]  B[0],A[0]  B[1] … A[1]  B[0], A[1]  B[1..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/11/23/第K大的数-二分答案-笛卡尔乘积第K大/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第K大的数 (二分答案, 笛卡尔乘积第K大)》 — Sonack's Blog&url=http://yoursite.com/2018/11/23/第K大的数-二分答案-笛卡尔乘积第K大/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/11/23/第K大的数-二分答案-笛卡尔乘积第K大/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/11/23/POJ-3111-K-Best-二分答案-平均值最大化/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">POJ 3111 K Best (二分答案, 平均值最大化)</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "6EbcdYHb2DuDDMnwRRLsvRyf-gzGzoHsz",
+            appKey: "6MGQUoCukOrqeDj9xOYx7r4I",
+            avatar: "mm",
+            placeholder: "想说点什么嘛",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>sonack &copy; 2016 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/11/23/第K大的数-二分答案-笛卡尔乘积第K大/&title=《第K大的数 (二分答案, 笛卡尔乘积第K大)》 — Sonack's Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/11/23/第K大的数-二分答案-笛卡尔乘积第K大/&title=《第K大的数 (二分答案, 笛卡尔乘积第K大)》 — Sonack's Blog&source=数组A和数组B，里面都有n个整数。数组C共有n^2个整数，分别是A[0]  B[0],A[0]  B[1] … A[1]  B[0], A[1]  B[1..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/11/23/第K大的数-二分答案-笛卡尔乘积第K大/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第K大的数 (二分答案, 笛卡尔乘积第K大)》 — Sonack's Blog&url=http://yoursite.com/2018/11/23/第K大的数-二分答案-笛卡尔乘积第K大/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/11/23/第K大的数-二分答案-笛卡尔乘积第K大/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACq0lEQVR42u3a0U4rMQwEUP7/p0G6r0A748SlVzr7hCjs5gRpbSb++Iivz39X8un3n/ztO99/K//+5QsPDw9vtPTfrhaQYPL1PH7K4zXj4eHhbfPy133+4LyoJBua3BMPDw/v3XizjUgKQ96I4+Hh4f1fvDaeyJvpdoPw8PDw3oGXhBG3Yoi2YCTx7oWsBQ8PDy/mtQdg7/D14vkeHh4e3sGp+knBaBc9GyN4skI8PDy8Bd7saH82IpC0v0lz3B6w4eHh4d3lnTSy+Yv7ZGggh/3wNR4eHt4arz1wShY0Q95KFYq/AB4eHt4CLw8jTj5txwiiAoaHh4e3wJsd1SdjWG2xybfj8ROL3AUPDw9vxMtf03n82o69RiOns0EuPDw8vAVeG78myLwwnBzCJWvAw8PD2+blAwGzLcgjhjYuwcPDw3slrzhMGgUW+fa1d4jadDw8PLwF3rWDpfK32q1sg49ogAAPDw9vxGvb5fzxbSRRD1Ql68HDw8Nb47X/9rejWvlYwHn4i4eHh/d6XjuMNbvOs+do4/Dw8PDWeLPDqpNBq3aD2rvh4eHh/S0veVjeIp/HxMU98fDw8F7Ia4/t75aB9lDtSRiBh4eHt8ab3eK8JCSHYfkwAR4eHt42rw1J20A2344EPHs6Hh4e3gavbX/z8amTwGJWkOoZMTw8PLwR7/y13ka0dwewimKAh4eHt8CbBayzI65h7WpLGh4eHt5V3md5taMDeVPetuBR2cDDw8Nb4J1XlfOmeVY28rKEh4eHt8Fri0ELbl/c7UjB45Xj4eHh7fFOBq1mHexs+65lLXh4eHh/xMsDi5P4OB9QwMPDw3s3XtHIBks5CYuLAQI8PDy8Nd5sEOokhshf90kT/6Qw4OHh4V3lnTS1s/BiNhaQbwQeHh7eGu8LHZbkKSQpk7gAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
